@@ -1,20 +1,27 @@
 name: Sync Google Drive Images
+
 on:
   workflow_dispatch:
+
   schedule:
     - cron: "*/10 * * * *"
+
 permissions:
   contents: write
+
 jobs:
   sync-images:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Install tools
         run: |
           sudo apt update
           sudo apt install -y rclone webp libheif-examples libheif1 file jq
+
       - name: Configure rclone
         env:
           GDRIVE_JSON_B64: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
@@ -23,6 +30,7 @@ jobs:
           rclone config create gdrive drive \
             scope drive.readonly \
             service_account_file "$PWD/gdrive.json"
+
       - name: Pull images from Google Drive
         run: |
           rm -rf raw-images
@@ -33,6 +41,7 @@ jobs:
             --update \
             --delete-during \
             -vP
+
       - name: Convert images to WebP
         run: |
           # Wipe out only the category folders we manage (keep other public/ files untouched)
@@ -65,6 +74,7 @@ jobs:
               cwebp "$img" -q 85 -resize 1200 0 -o "$out"
             fi
           done
+
       - name: Generate manifest.json
         run: |
           categories_json="[]"
@@ -104,6 +114,7 @@ jobs:
               count: ([$categories[].count] | add // 0),
               categories: $categories
             }' > public/manifest.json
+
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
@@ -119,6 +130,7 @@ jobs:
             git commit -m "Auto-sync Google Drive images"
             git push
           fi
+
       - name: Cleanup credentials
         if: always()
         run: |
