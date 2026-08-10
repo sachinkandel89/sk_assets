@@ -29,7 +29,8 @@ jobs:
           echo "$GDRIVE_JSON_B64" | base64 -d > gdrive.json
           rclone config create gdrive drive \
             scope drive.readonly \
-            service_account_file "$PWD/gdrive.json"
+            service_account_file "$PWD/gdrive.json" \
+            shared_with_me true
 
       - name: Pull images from Google Drive
         run: |
@@ -38,6 +39,7 @@ jobs:
           rclone sync \
             "gdrive:portfolio" \
             "raw-images" \
+            --drive-shared-with-me \
             --update \
             --delete-during \
             -vP
