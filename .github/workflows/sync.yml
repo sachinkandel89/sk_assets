@@ -1,0 +1,125 @@
+name: Sync Google Drive Images
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
+permissions:
+  contents: write
+jobs:
+  sync-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install tools
+        run: |
+          sudo apt update
+          sudo apt install -y rclone webp libheif-examples libheif1 file jq
+      - name: Configure rclone
+        env:
+          GDRIVE_JSON_B64: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$GDRIVE_JSON_B64" | base64 -d > gdrive.json
+          rclone config create gdrive drive \
+            scope drive.readonly \
+            service_account_file "$PWD/gdrive.json"
+      - name: Pull images from Google Drive
+        run: |
+          rm -rf raw-images
+          mkdir -p raw-images
+          rclone sync \
+            "gdrive:portfolio" \
+            "raw-images" \
+            --update \
+            --delete-during \
+            -vP
+      - name: Convert images to WebP
+        run: |
+          # Wipe out only the category folders we manage (keep other public/ files untouched)
+          for d in "${GITHUB_WORKSPACE}"/raw-images/*/; do
+            cat=$(basename "$d")
+            rm -rf "public/${cat}"
+          done
+
+          find raw-images -mindepth 2 -type f -print0 | while IFS= read -r -d '' img; do
+            mime=$(file --mime-type -b "$img")
+            [[ "$mime" != image/* ]] && continue
+
+            # category = top-level folder name under raw-images (e.g. City, Landscape, ...)
+            rel="${img#raw-images/}"
+            category="${rel%%/*}"
+            base="$(basename "$img")"
+            name="${base%.*}"
+
+            outdir="public/${category}"
+            mkdir -p "$outdir"
+            out="${outdir}/${name}.webp"
+            echo "Converting: $img → $out"
+
+            if [[ "$mime" == "image/heic" ]]; then
+              tmp="/tmp/${name}.jpg"
+              heif-convert "$img" "$tmp"
+              cwebp "$tmp" -q 85 -resize 1200 0 -o "$out"
+              rm "$tmp"
+            else
+              cwebp "$img" -q 85 -resize 1200 0 -o "$out"
+            fi
+          done
+      - name: Generate manifest.json
+        run: |
+          categories_json="[]"
+          for d in "${GITHUB_WORKSPACE}"/raw-images/*/; do
+            cat=$(basename "$d")
+            [[ -d "public/${cat}" ]] || continue
+
+            images_json=$(
+              find "public/${cat}" -maxdepth 1 -type f -name "*.webp" -print0 \
+              | while IFS= read -r -d '' f; do
+                  name=$(basename "$f")
+                  size=$(stat -c%s "$f")
+                  mtime=$(date -u -r "$f" +"%Y-%m-%dT%H:%M:%SZ")
+                  jq -n \
+                    --arg name "$name" \
+                    --arg path "${cat}/${name}" \
+                    --argjson size "$size" \
+                    --arg updatedAt "$mtime" \
+                    '{name: $name, path: $path, size: $size, updatedAt: $updatedAt}'
+                done \
+              | jq -s '.'
+            )
+
+            categories_json=$(
+              jq -n \
+                --argjson acc "$categories_json" \
+                --arg category "$cat" \
+                --argjson images "$images_json" \
+                '$acc + [{category: $category, count: ($images | length), images: $images}]'
+            )
+          done
+
+          jq -n \
+            --argjson categories "$categories_json" \
+            '{
+              generatedAt: (now | strftime("%Y-%m-%dT%H:%M:%SZ")),
+              count: ([$categories[].count] | add // 0),
+              categories: $categories
+            }' > public/manifest.json
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- public/manifest.json
+          for d in raw-images/*/; do
+            cat=$(basename "$d")
+            git add -A -- "public/${cat}"
+          done
+          if git diff --cached --quiet; then
+            echo "No changes detected."
+          else
+            git commit -m "Auto-sync Google Drive images"
+            git push
+          fi
+      - name: Cleanup credentials
+        if: always()
+        run: |
+          rm -f gdrive.json
