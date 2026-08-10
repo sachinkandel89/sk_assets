@@ -1,0 +1,126 @@
+{
+  "generatedAt": "2026-08-10T09:17:21Z",
+  "count": 13,
+  "categories": [
+    {
+      "category": "City",
+      "count": 2,
+      "images": [
+        {
+          "name": "Pokhara.webp",
+          "path": "City/Pokhara.webp",
+          "size": 266886,
+          "updatedAt": "2026-08-10T09:17:19Z"
+        },
+        {
+          "name": "Kathmandu.webp",
+          "path": "City/Kathmandu.webp",
+          "size": 438020,
+          "updatedAt": "2026-08-10T09:17:18Z"
+        }
+      ]
+    },
+    {
+      "category": "Landscape",
+      "count": 1,
+      "images": [
+        {
+          "name": "Phes.webp",
+          "path": "Landscape/Phes.webp",
+          "size": 245194,
+          "updatedAt": "2026-08-10T09:17:20Z"
+        }
+      ]
+    },
+    {
+      "category": "Nature",
+      "count": 2,
+      "images": [
+        {
+          "name": "Mount Everest.webp",
+          "path": "Nature/Mount Everest.webp",
+          "size": 277522,
+          "updatedAt": "2026-08-10T09:17:18Z"
+        },
+        {
+          "name": "Tilicho Lake.webp",
+          "path": "Nature/Tilicho Lake.webp",
+          "size": 190154,
+          "updatedAt": "2026-08-10T09:17:18Z"
+        }
+      ]
+    },
+    {
+      "category": "Popular",
+      "count": 1,
+      "images": [
+        {
+          "name": "Phewa Lake.webp",
+          "path": "Popular/Phewa Lake.webp",
+          "size": 253610,
+          "updatedAt": "2026-08-10T09:17:18Z"
+        }
+      ]
+    },
+    {
+      "category": "Street",
+      "count": 1,
+      "images": [
+        {
+          "name": "Asan Bajar.webp",
+          "path": "Street/Asan Bajar.webp",
+          "size": 277946,
+          "updatedAt": "2026-08-10T09:17:18Z"
+        }
+      ]
+    },
+    {
+      "category": "Travel",
+      "count": 2,
+      "images": [
+        {
+          "name": "Ghandruk Village.webp",
+          "path": "Travel/Ghandruk Village.webp",
+          "size": 214632,
+          "updatedAt": "2026-08-10T09:17:20Z"
+        },
+        {
+          "name": "Upper Mustnag.webp",
+          "path": "Travel/Upper Mustnag.webp",
+          "size": 310124,
+          "updatedAt": "2026-08-10T09:17:21Z"
+        }
+      ]
+    },
+    {
+      "category": "WildLife",
+      "count": 4,
+      "images": [
+        {
+          "name": "tiger.webp",
+          "path": "WildLife/tiger.webp",
+          "size": 225994,
+          "updatedAt": "2026-08-10T09:17:19Z"
+        },
+        {
+          "name": "Elephant.webp",
+          "path": "WildLife/Elephant.webp",
+          "size": 249562,
+          "updatedAt": "2026-08-10T09:17:19Z"
+        },
+        {
+          "name": "snake.webp",
+          "path": "WildLife/snake.webp",
+          "size": 543406,
+          "updatedAt": "2026-08-10T09:17:20Z"
+        },
+        {
+          "name": "Rhino.webp",
+          "path": "WildLife/Rhino.webp",
+          "size": 259190,
+          "updatedAt": "2026-08-10T09:17:19Z"
+        }
+      ]
+    }
+  ]
+}
