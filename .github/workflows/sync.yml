@@ -46,10 +46,10 @@ jobs:
 
       - name: Convert images to WebP
         run: |
-          # Wipe out only the category folders we manage (keep other public/ files untouched)
+          # Wipe out only the category folders we manage (keep other repo files untouched)
           for d in "${GITHUB_WORKSPACE}"/raw-images/*/; do
             cat=$(basename "$d")
-            rm -rf "public/${cat}"
+            rm -rf "${cat}"
           done
 
           find raw-images -mindepth 2 -type f -print0 | while IFS= read -r -d '' img; do
@@ -62,7 +62,7 @@ jobs:
             base="$(basename "$img")"
             name="${base%.*}"
 
-            outdir="public/${category}"
+            outdir="${category}"
             mkdir -p "$outdir"
             out="${outdir}/${name}.webp"
             echo "Converting: $img → $out"
@@ -82,10 +82,10 @@ jobs:
           categories_json="[]"
           for d in "${GITHUB_WORKSPACE}"/raw-images/*/; do
             cat=$(basename "$d")
-            [[ -d "public/${cat}" ]] || continue
+            [[ -d "${cat}" ]] || continue
 
             images_json=$(
-              find "public/${cat}" -maxdepth 1 -type f -name "*.webp" -print0 \
+              find "${cat}" -maxdepth 1 -type f -name "*.webp" -print0 \
               | while IFS= read -r -d '' f; do
                   name=$(basename "$f")
                   size=$(stat -c%s "$f")
@@ -115,16 +115,16 @@ jobs:
               generatedAt: (now | strftime("%Y-%m-%dT%H:%M:%SZ")),
               count: ([$categories[].count] | add // 0),
               categories: $categories
-            }' > public/manifest.json
+            }' > manifest.json
 
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- public/manifest.json
+          git add -A -- manifest.json
           for d in raw-images/*/; do
             cat=$(basename "$d")
-            git add -A -- "public/${cat}"
+            git add -A -- "${cat}"
           done
           if git diff --cached --quiet; then
             echo "No changes detected."
