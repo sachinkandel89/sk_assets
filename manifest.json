@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T10:06:04Z",
+  "generatedAt": "2026-08-17T11:02:30Z",
   "count": 13,
   "categories": [
     {
@@ -10,13 +10,13 @@
           "name": "Kathmandu.webp",
           "path": "City/Kathmandu.webp",
           "size": 438020,
-          "updatedAt": "2026-08-17T10:06:03Z"
+          "updatedAt": "2026-08-17T11:02:29Z"
         },
         {
           "name": "Pokhara.webp",
           "path": "City/Pokhara.webp",
           "size": 266886,
-          "updatedAt": "2026-08-17T10:06:03Z"
+          "updatedAt": "2026-08-17T11:02:28Z"
         }
       ]
     },
@@ -28,7 +28,7 @@
           "name": "Phes.webp",
           "path": "Landscape/Phes.webp",
           "size": 245194,
-          "updatedAt": "2026-08-17T10:06:04Z"
+          "updatedAt": "2026-08-17T11:02:29Z"
         }
       ]
     },
@@ -40,13 +40,13 @@
           "name": "Tilicho Lake.webp",
           "path": "Nature/Tilicho Lake.webp",
           "size": 190154,
-          "updatedAt": "2026-08-17T10:06:03Z"
+          "updatedAt": "2026-08-17T11:02:29Z"
         },
         {
           "name": "Mount Everest.webp",
           "path": "Nature/Mount Everest.webp",
           "size": 277522,
-          "updatedAt": "2026-08-17T10:06:03Z"
+          "updatedAt": "2026-08-17T11:02:29Z"
         }
       ]
     },
@@ -58,7 +58,7 @@
           "name": "Phewa Lake.webp",
           "path": "Popular/Phewa Lake.webp",
           "size": 253610,
-          "updatedAt": "2026-08-17T10:06:01Z"
+          "updatedAt": "2026-08-17T11:02:27Z"
         }
       ]
     },
@@ -70,7 +70,7 @@
           "name": "Asan Bajar.webp",
           "path": "Street/Asan Bajar.webp",
           "size": 277946,
-          "updatedAt": "2026-08-17T10:06:04Z"
+          "updatedAt": "2026-08-17T11:02:30Z"
         }
       ]
     },
@@ -82,13 +82,13 @@
           "name": "Upper Mustnag.webp",
           "path": "Travel/Upper Mustnag.webp",
           "size": 310124,
-          "updatedAt": "2026-08-17T10:06:01Z"
+          "updatedAt": "2026-08-17T11:02:27Z"
         },
         {
           "name": "Ghandruk Village.webp",
           "path": "Travel/Ghandruk Village.webp",
           "size": 214632,
-          "updatedAt": "2026-08-17T10:06:01Z"
+          "updatedAt": "2026-08-17T11:02:27Z"
         }
       ]
     },
@@ -100,25 +100,25 @@
           "name": "snake.webp",
           "path": "WildLife/snake.webp",
           "size": 543406,
-          "updatedAt": "2026-08-17T10:06:02Z"
+          "updatedAt": "2026-08-17T11:02:27Z"
         },
         {
           "name": "Elephant.webp",
           "path": "WildLife/Elephant.webp",
           "size": 249562,
-          "updatedAt": "2026-08-17T10:06:02Z"
+          "updatedAt": "2026-08-17T11:02:28Z"
         },
         {
           "name": "Rhino.webp",
           "path": "WildLife/Rhino.webp",
           "size": 259190,
-          "updatedAt": "2026-08-17T10:06:02Z"
+          "updatedAt": "2026-08-17T11:02:28Z"
         },
         {
           "name": "tiger.webp",
           "path": "WildLife/tiger.webp",
           "size": 225994,
-          "updatedAt": "2026-08-17T10:06:02Z"
+          "updatedAt": "2026-08-17T11:02:28Z"
         }
       ]
     }
